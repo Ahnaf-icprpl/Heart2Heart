@@ -1,0 +1,99 @@
+<!-- Quick Post Launcher Banner -->
+<div class="composer-card">
+  <div class="composer-header">
+    <div class="user-avatar-sm" style="background-color: <%= currentUser.avatarBg %>; width: 40px; height: 40px; font-size: 1.3rem;">
+      <%= currentUser.avatar %>
+    </div>
+    <a href="/posts/new" class="composer-input-fake">
+      What is on your heart today, <%= currentUser.name.split(' ')[0] %>? Share here...
+    </a>
+  </div>
+
+  <div class="composer-quick-actions">
+    <div class="composer-prompts">
+      <a href="/posts/new?mood=Overwhelmed" class="prompt-chip">🌪️ Feeling overwhelmed</a>
+      <a href="/posts/new?mood=Lonely" class="prompt-chip">🥀 Need a gentle ear</a>
+      <a href="/posts/new?mood=Hopeful" class="prompt-chip">🌱 Little victory</a>
+      <a href="/posts/new?isAnonymous=true" class="prompt-chip">🕊️ Vent anonymously</a>
+    </div>
+
+    <a href="/posts/new" class="btn btn-pill-subtle">
+      <span>✍️ Write Story</span>
+    </a>
+  </div>
+</div>
+
+<!-- Feed Filtering Bar -->
+<div class="feed-filter-bar">
+  <!-- Mood Pills -->
+  <div class="mood-chip-scroll">
+    <% moodFilters.forEach(m => { %>
+      <a 
+        href="/?mood=<%= encodeURIComponent(m.value) %><%= activeFilters.circle ? '&circle=' + encodeURIComponent(activeFilters.circle) : '' %><%= activeFilters.sort ? '&sort=' + activeFilters.sort : '' %>"
+        class="filter-chip <%= activeFilters.mood === m.value ? 'active' : '' %>"
+      >
+        <span><%= m.emoji %></span>
+        <span><%= m.label %></span>
+      </a>
+    <% }); %>
+  </div>
+
+  <!-- Active filter status & sorting -->
+  <div class="feed-sort-row">
+    <div>
+      <% if (activeFilters.circle || activeFilters.tag || activeFilters.mood || activeFilters.supportType) { %>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">
+          Filtering by:
+          <% if (activeFilters.circle && currentCircle) { %><strong>Circle: <%= currentCircle.name %></strong><% } %>
+          <% if (activeFilters.tag) { %><strong>Tag: #<%= activeFilters.tag %></strong><% } %>
+          <% if (activeFilters.mood) { %><strong>Mood: <%= activeFilters.mood %></strong><% } %>
+          <% if (activeFilters.supportType) { %><strong>Support: <%= activeFilters.supportType %></strong><% } %>
+          <a href="/" style="color: var(--primary); margin-left: 0.5rem; text-decoration: underline; font-size: 0.8rem;">(Clear filters)</a>
+        </span>
+      <% } else { %>
+        <span>Community Safe Feed</span>
+      <% } %>
+    </div>
+
+    <!-- Sort Options -->
+    <div class="sort-tabs">
+      <a 
+        href="/?sort=latest<%= activeFilters.mood ? '&mood=' + encodeURIComponent(activeFilters.mood) : '' %><%= activeFilters.circle ? '&circle=' + encodeURIComponent(activeFilters.circle) : '' %>"
+        class="sort-tab <%= activeFilters.sort === 'latest' ? 'active' : '' %>"
+      >
+        Recent
+      </a>
+      <a 
+        href="/?sort=most_hugs<%= activeFilters.mood ? '&mood=' + encodeURIComponent(activeFilters.mood) : '' %><%= activeFilters.circle ? '&circle=' + encodeURIComponent(activeFilters.circle) : '' %>"
+        class="sort-tab <%= activeFilters.sort === 'most_hugs' ? 'active' : '' %>"
+      >
+        Most Hugs ❤️
+      </a>
+      <a 
+        href="/?sort=most_comments<%= activeFilters.mood ? '&mood=' + encodeURIComponent(activeFilters.mood) : '' %><%= activeFilters.circle ? '&circle=' + encodeURIComponent(activeFilters.circle) : '' %>"
+        class="sort-tab <%= activeFilters.sort === 'most_comments' ? 'active' : '' %>"
+      >
+        Conversations
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Posts Stream -->
+<div class="posts-stream">
+  <% if (posts && posts.length > 0) { %>
+    <% posts.forEach(post => { %>
+      <%- include('../partials/post-card', { post }) %>
+    <% }); %>
+  <% } else { %>
+    <div class="card" style="text-align: center; padding: 3rem 1.5rem;">
+      <div style="font-size: 3rem; margin-bottom: 0.75rem;">🕊️</div>
+      <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">No stories found in this filter</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto 1.5rem;">
+        Be the first gentle soul to share your thoughts or try clearing your filters.
+      </p>
+      <a href="/" class="btn btn-secondary">Clear All Filters</a>
+      <a href="/posts/new" class="btn btn-primary" style="margin-left: 0.5rem;">Share a Story</a>
+    </div>
+  <% } %>
+</div>

@@ -1,0 +1,104 @@
+<div style="max-width: 860px; margin: 0 auto;">
+  <!-- Header -->
+  <div style="margin-bottom: 2rem; text-align: center;">
+    <div style="display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; background-color: var(--primary-light); border-radius: 50%; font-size: 2rem; margin-bottom: 0.75rem;">
+      🛟
+    </div>
+    <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--text-main);">Safe Haven & Crisis Support</h1>
+    <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 550px; margin: 0.5rem auto 0;">
+      If you are in deep distress, feeling unsafe, or need someone to talk to right away, free confidential support is always within reach. You never have to carry this alone.
+    </p>
+  </div>
+
+  <!-- Immediate Helplines Section -->
+  <div style="margin-bottom: 2.5rem;">
+    <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+      <span>📞</span>
+      <span>24/7 Confidential Crisis Helplines</span>
+    </h2>
+
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <% helplines.forEach(helpline => { %>
+        <div class="helpline-card">
+          <div class="helpline-info">
+            <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); font-weight: 700;">
+              <%= helpline.country %>
+            </div>
+            <h4><%= helpline.name %></h4>
+            <div class="helpline-hours">🕒 <%= helpline.hours %></div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;"><%= helpline.description %></p>
+            <% if (helpline.textSupport) { %>
+              <div style="font-size: 0.8rem; color: var(--secondary); font-weight: 600; margin-top: 0.3rem;">
+                💬 <%= helpline.textSupport %>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="helpline-actions">
+            <a href="<%= helpline.actionUrl %>" class="btn btn-primary" style="font-size: 0.85rem; white-space: nowrap;">
+              <span>Call <%= helpline.number %></span>
+            </a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <!-- Grounding Techniques Section -->
+  <div style="margin-bottom: 2.5rem;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+      <h2 style="font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
+        <span>🖐️</span>
+        <span>Emergency Grounding Tools</span>
+      </h2>
+      <a href="/resources/breathing" class="btn btn-pill-subtle" style="font-size: 0.82rem;">
+        <span>🫁 Open Interactive Breathing Room</span>
+      </a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+      <% groundingTechniques.forEach(tech => { %>
+        <div class="card">
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;">
+            <span style="font-size: 1.4rem;"><%= tech.icon %></span>
+            <h3 style="font-size: 1.05rem; font-weight: 700;"><%= tech.title %></h3>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;"><%= tech.summary %></p>
+
+          <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+            <% tech.steps.forEach((step, index) => { %>
+              <div class="technique-step-item">
+                <strong>Step <%= index + 1 %>:</strong> <%= step %>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <!-- Gentle Self-Care Reminder Card -->
+  <div class="card" style="background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-subtle) 100%); border-left: 4px solid var(--primary);">
+    <div style="font-weight: 800; font-size: 1.05rem; margin-bottom: 0.6rem; color: var(--primary);">
+      🤍 A Gentle Checklist For Heavy Moments
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; font-size: 0.88rem; color: var(--text-main);">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span>💧</span>
+        <span>Take 3 sips of room-temp water</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span>🛋️</span>
+        <span>Drop your shoulders away from ears</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span>🫁</span>
+        <span>Unclench your jaw and tongue</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span>⛅</span>
+        <span>Look out the window for 60 seconds</span>
+      </div>
+    </div>
+  </div>
+</div>

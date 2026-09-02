@@ -1,0 +1,20 @@
+<div class="card" style="max-width: 600px; margin: 3rem auto; text-align: center; padding: 3.5rem 2rem;">
+  <div style="font-size: 3.5rem; margin-bottom: 0.75rem;">🌧️</div>
+  <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">
+    A Gentle Pause
+  </h1>
+  <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+    Our servers stumbled for a moment, but you haven't lost your place. Please try refreshing, or rest here for a few moments.
+  </p>
+
+  <div style="display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+    <a href="/" class="btn btn-primary">Back to Safe Space</a>
+    <a href="/resources" class="btn btn-secondary">Safe Haven Resources</a>
+  </div>
+
+  <% if (typeof error !== 'undefined' && error && error.message) { %>
+    <div style="margin-top: 2rem; text-align: left; background: var(--bg-surface-subtle); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.8rem; overflow-x: auto;">
+      <code><%= error.message %></code>
+    </div>
+  <% } %>
+</div>

@@ -1,0 +1,48 @@
+<div style="max-width: 900px; margin: 0 auto;">
+  <!-- Header -->
+  <div style="margin-bottom: 1.75rem;">
+    <h1 style="font-size: 1.6rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+      <span>🫧</span>
+      <span>Support Circles</span>
+    </h1>
+    <p style="font-size: 0.92rem; color: var(--text-muted); margin-top: 0.35rem;">
+      Find safe themed spaces tailored to what you are currently walking through. Join circles to stay connected with members who truly understand.
+    </p>
+  </div>
+
+  <!-- Circles Grid -->
+  <div class="circles-grid">
+    <% circles.forEach(circle => { %>
+      <div class="circle-card">
+        <!-- Banner with gradient -->
+        <div class="circle-card-banner" style="background: <%= circle.bannerGradient %>;">
+          <div class="circle-card-icon">
+            <%= circle.icon %>
+          </div>
+        </div>
+
+        <div class="circle-card-body">
+          <h3 class="circle-card-name">
+            <a href="/circles/<%= circle.id %>"><%= circle.name %></a>
+          </h3>
+          <p class="circle-card-tagline"><%= circle.tagline %></p>
+
+          <div class="circle-card-footer">
+            <span>👥 <%= circle.memberCount %> members • 📝 <%= circle.postCount || 0 %> stories</span>
+            
+            <form action="/circles/<%= circle.id %>/join" method="POST" style="margin: 0;">
+              <input type="hidden" name="returnTo" value="/circles">
+              <button 
+                type="submit" 
+                class="btn <%= circle.isMember ? 'btn-secondary' : 'btn-pill-subtle' %>"
+                style="padding: 0.3rem 0.8rem; font-size: 0.8rem;"
+              >
+                <%= circle.isMember ? '✓ Joined' : '+ Join' %>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>

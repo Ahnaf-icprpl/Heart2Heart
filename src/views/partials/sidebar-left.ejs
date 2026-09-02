@@ -1,0 +1,58 @@
+<aside class="sidebar-left">
+  <!-- Navigation Links -->
+  <div class="card" style="margin-bottom: 1.25rem;">
+    <nav class="sidebar-nav">
+      <a href="/" class="sidebar-link <%= activePath === '/' ? 'active' : '' %>">
+        <span class="sidebar-link-icon">🏡</span>
+        <span>Safe Feed</span>
+      </a>
+
+      <a href="/moods" class="sidebar-link <%= activePath === '/moods' ? 'active' : '' %>">
+        <span class="sidebar-link-icon">🌈</span>
+        <span>Feelings & Moods</span>
+      </a>
+
+      <a href="/circles" class="sidebar-link <%= activePath.startsWith('/circles') ? 'active' : '' %>">
+        <span class="sidebar-link-icon">🫧</span>
+        <span>Support Circles</span>
+      </a>
+
+      <a href="/resources/breathing" class="sidebar-link <%= activePath === '/resources/breathing' ? 'active' : '' %>">
+        <span class="sidebar-link-icon">🫁</span>
+        <span>Breathing Room</span>
+      </a>
+
+      <a href="/resources" class="sidebar-link <%= activePath === '/resources' ? 'active' : '' %>">
+        <span class="sidebar-link-icon">🛟</span>
+        <span>Safe Haven & Crisis</span>
+      </a>
+
+      <a href="/profile" class="sidebar-link <%= activePath === '/profile' ? 'active' : '' %>">
+        <span class="sidebar-link-icon">🤍</span>
+        <span>My Safe Space</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Safe Space Values Card -->
+  <div class="card" style="background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-surface-subtle) 100%);">
+    <div class="card-title" style="color: var(--primary); font-size: 0.92rem;">
+      <span>🛡️</span>
+      <span>Safe Space Pledge</span>
+    </div>
+    <ul style="list-style: none; font-size: 0.82rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.6rem;">
+      <li style="display: flex; gap: 0.4rem;">
+        <span>🌿</span>
+        <span><strong>No judgment:</strong> All feelings and emotional journeys are honored.</span>
+      </li>
+      <li style="display: flex; gap: 0.4rem;">
+        <span>🕊️</span>
+        <span><strong>Warmth first:</strong> Offer empathy before unsolicited advice.</span>
+      </li>
+      <li style="display: flex; gap: 0.4rem;">
+        <span>🔒</span>
+        <span><strong>Anonymity:</strong> You can always share thoughts anonymously.</span>
+      </li>
+    </ul>
+  </div>
+</aside>

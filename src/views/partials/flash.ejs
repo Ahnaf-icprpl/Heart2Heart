@@ -1,0 +1,20 @@
+<% if (flash && flash.success) { %>
+  <div class="flash-alert flash-success">
+    <span>🌸 <%= flash.success %></span>
+    <button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:inherit;">✕</button>
+  </div>
+<% } %>
+
+<% if (flash && flash.info) { %>
+  <div class="flash-alert flash-info">
+    <span>🕊️ <%= flash.info %></span>
+    <button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:inherit;">✕</button>
+  </div>
+<% } %>
+
+<% if (flash && flash.error) { %>
+  <div class="flash-alert flash-error">
+    <span>🤍 <%= flash.error %></span>
+    <button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:inherit;">✕</button>
+  </div>
+<% } %>

@@ -1,0 +1,75 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <!-- Brand -->
+    <a href="/" class="nav-brand">
+      <span class="brand-heart">💖</span>
+      <span>Heart2Heart</span>
+    </a>
+
+    <!-- Search -->
+    <div class="nav-search">
+      <form action="/search" method="GET">
+        <span class="nav-search-icon">🔍</span>
+        <input 
+          type="search" 
+          name="q" 
+          placeholder="Search feelings, topics, or stories..." 
+          value="<%= typeof query !== 'undefined' && query.q ? query.q : '' %>"
+        >
+      </form>
+    </div>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <!-- Theme Toggle -->
+      <button type="button" class="btn-icon" data-theme-toggle title="Switch Theme (Light / Dark / Lavender)">
+        <span>🎨</span>
+      </button>
+
+      <!-- Peaceful Breathing Room Shortcut -->
+      <a href="/resources/breathing" class="btn-icon" title="Peaceful Breathing Room">
+        <span>🧘</span>
+      </a>
+
+      <!-- Share Feelings CTA -->
+      <a href="/posts/new" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.88rem;">
+        <span>✍️ Share Heart</span>
+      </a>
+
+      <!-- Persona / User Switcher -->
+      <div class="user-switch-wrap">
+        <button type="button" class="user-badge-btn" id="user-switcher-btn">
+          <div class="user-avatar-sm" style="background-color: <%= currentUser.avatarBg %>;">
+            <%= currentUser.avatar %>
+          </div>
+          <span class="user-name-sm"><%= currentUser.name.split(' ')[0] %></span>
+          <span style="font-size: 0.7rem; color: var(--text-light);">▼</span>
+        </button>
+
+        <div class="dropdown-menu" id="user-switcher-menu">
+          <div class="dropdown-title">Active Persona (Demo)</div>
+          
+          <% allUsers.forEach(u => { %>
+            <form action="/profile/switch" method="POST" style="margin: 0;">
+              <input type="hidden" name="userId" value="<%= u.id %>">
+              <input type="hidden" name="returnTo" value="<%= activePath %>">
+              <button type="submit" class="dropdown-item <%= u.id === currentUser.id ? 'active' : '' %>">
+                <span style="font-size: 1.1rem; width: 24px; text-align: center;"><%= u.avatar %></span>
+                <div>
+                  <div style="font-weight: 600;"><%= u.name %></div>
+                  <div style="font-size: 0.75rem; color: var(--text-light);">@<%= u.handle %></div>
+                </div>
+              </button>
+            </form>
+          <% }); %>
+
+          <div style="border-top: 1px solid var(--border-color); margin: 0.4rem 0;"></div>
+          <a href="/profile" class="dropdown-item">
+            <span>👤</span>
+            <span>View My Profile</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

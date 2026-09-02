@@ -1,0 +1,103 @@
+<div style="max-width: 820px; margin: 0 auto;">
+  <!-- Back navigation -->
+  <div style="margin-bottom: 1rem;">
+    <a href="/" style="font-size: 0.88rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.35rem;">
+      <span>←</span> Back to Safe Feed
+    </a>
+  </div>
+
+  <!-- Main Post Card -->
+  <%- include('../partials/post-card', { post }) %>
+
+  <!-- Supportive Comments Container -->
+  <div class="comments-container">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+      <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+        <span>💬</span>
+        <span>Supportive Responses (<%= post.comments ? post.comments.length : 0 %>)</span>
+      </h3>
+      <span style="font-size: 0.8rem; color: var(--text-light);">Holding space for each other</span>
+    </div>
+
+    <!-- Add Supportive Comment Form -->
+    <form action="/posts/<%= post.id %>/comments" method="POST" class="comment-form">
+      <!-- Kind Word Quick Starter Chips -->
+      <div style="margin-bottom: 0.35rem;">
+        <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-light); margin-bottom: 0.35rem; display: block;">
+          ✨ Quick kind encouragement prompts (Click to insert):
+        </span>
+        <div class="kind-prompts-bar">
+          <% supportivePrompts.forEach(prompt => { %>
+            <button type="button" class="kind-prompt-btn" data-prompt-text="<%= prompt %>">
+              + "<%= prompt %>"
+            </button>
+          <% }); %>
+        </div>
+      </div>
+
+      <textarea 
+        name="content" 
+        id="comment-textarea"
+        class="comment-textarea" 
+        placeholder="Write your compassionate response, gentle advice, or comforting words..." 
+        required
+      ></textarea>
+
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">
+          <input type="checkbox" name="isAnonymous">
+          <span>Reply Anonymously 🍃</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1.4rem; font-size: 0.88rem;">
+          <span>🕊️ Send Kind Words</span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Comments List -->
+    <div class="comments-list">
+      <% if (post.comments && post.comments.length > 0) { %>
+        <% post.comments.forEach(comment => { %>
+          <div class="comment-item">
+            <div class="comment-avatar" style="background-color: <%= comment.authorAvatarBg || '#e2e8f0' %>;">
+              <%= comment.authorAvatar || '🌿' %>
+            </div>
+            
+            <div class="comment-content-wrap">
+              <div class="comment-author-row">
+                <span class="comment-author-name">
+                  <%= comment.authorName %>
+                  <% if (comment.isAnonymous) { %>
+                    <span style="font-size: 0.72rem; color: var(--text-light); font-weight: normal; margin-left: 0.3rem;">(Anonymous)</span>
+                  <% } %>
+                </span>
+                <span style="font-size: 0.78rem; color: var(--text-light);"><%= timeAgo(comment.createdAt) %></span>
+              </div>
+              <div class="comment-text"><%= comment.content %></div>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted); background-color: var(--bg-surface-subtle); border-radius: var(--radius-md);">
+          <div style="font-size: 2rem; margin-bottom: 0.4rem;">🌻</div>
+          <p style="font-size: 0.9rem;">No responses yet. Be the first to leave a gentle, comforting word.</p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Related stories from this circle -->
+  <% if (relatedPosts && relatedPosts.length > 0) { %>
+    <div style="margin-top: 2.5rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-main);">
+        More from <%= post.circleName %>
+      </h3>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% relatedPosts.forEach(relPost => { %>
+          <%- include('../partials/post-card', { post: relPost }) %>
+        <% }); %>
+      </div>
+    </div>
+  <% } %>
+</div>

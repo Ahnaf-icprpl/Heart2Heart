@@ -1,0 +1,135 @@
+<div class="card" style="max-width: 780px; margin: 0 auto; padding: 2rem;">
+  <div style="margin-bottom: 1.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+    <a href="/" style="font-size: 0.85rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.35rem; margin-bottom: 0.5rem;">
+      <span>←</span> Back to Feed
+    </a>
+    <h1 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+      <span>✍️</span>
+      <span>Share What's on Your Heart</span>
+    </h1>
+    <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.25rem;">
+      Your vulnerability is deeply respected here. Share without fear of judgment.
+    </p>
+  </div>
+
+  <form action="/posts" method="POST">
+    <!-- Anonymous Toggle & Author Preview -->
+    <div style="display: flex; align-items: center; justify-content: space-between; background-color: var(--bg-surface-subtle); padding: 0.85rem 1.1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="user-avatar-sm" id="composer-preview-avatar" style="background-color: <%= currentUser.avatarBg %>;">
+          <%= currentUser.avatar %>
+        </div>
+        <div>
+          <div style="font-weight: 700; font-size: 0.9rem;" id="composer-preview-author"><%= currentUser.name %></div>
+          <div style="font-size: 0.78rem; color: var(--text-light);">Posting to Heart2Heart</div>
+        </div>
+      </div>
+
+      <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.88rem; font-weight: 600;">
+        <input type="checkbox" name="isAnonymous" id="is-anonymous-toggle" <%= (typeof query !== 'undefined' && query.isAnonymous === 'true') ? 'checked' : '' %>>
+        <span>Post Anonymously 🕊️</span>
+      </label>
+    </div>
+
+    <!-- Title / Hook -->
+    <div class="form-group">
+      <label for="post-title" class="form-label">Title or Summary of your feeling *</label>
+      <input 
+        type="text" 
+        id="post-title" 
+        name="title" 
+        class="form-input" 
+        placeholder="e.g. Paralyzed by perfectionism, feeling exhausted after today..." 
+        required
+      >
+    </div>
+
+    <!-- Main Content -->
+    <div class="form-group">
+      <label for="post-content" class="form-label">Express your feelings, vent, or story *</label>
+      <textarea 
+        id="post-content" 
+        name="content" 
+        class="form-textarea" 
+        style="min-height: 180px;" 
+        placeholder="Let your thoughts flow freely. There is no need to write perfectly — just write honestly..." 
+        required
+      ></textarea>
+    </div>
+
+    <!-- Two-column row: Circle & Mood -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+      <div class="form-group" style="margin-bottom: 0;">
+        <label for="post-circle" class="form-label">Support Circle</label>
+        <select id="post-circle" name="circleId" class="form-select">
+          <% circles.forEach(c => { %>
+            <option value="<%= c.id %>" <%= preselectedCircle === c.id ? 'selected' : '' %>>
+              <%= c.icon %> <%= c.name %>
+            </option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;">
+        <label for="post-mood" class="form-label">Primary Feeling / Mood</label>
+        <select id="post-mood" name="mood" class="form-select">
+          <option value="Overwhelmed" <%= (typeof query !== 'undefined' && query.mood === 'Overwhelmed') ? 'selected' : '' %>>🌪️ Overwhelmed</option>
+          <option value="Exhausted" <%= (typeof query !== 'undefined' && query.mood === 'Exhausted') ? 'selected' : '' %>>😮‍💨 Exhausted</option>
+          <option value="Lonely" <%= (typeof query !== 'undefined' && query.mood === 'Lonely') ? 'selected' : '' %>>🥀 Lonely</option>
+          <option value="Hopeful" <%= (typeof query !== 'undefined' && query.mood === 'Hopeful') ? 'selected' : '' %>>🌱 Hopeful</option>
+          <option value="Healing" <%= (typeof query !== 'undefined' && query.mood === 'Healing') ? 'selected' : '' %>>🩹 Healing</option>
+          <option value="Overthinking" <%= (typeof query !== 'undefined' && query.mood === 'Overthinking') ? 'selected' : '' %>>💭 Overthinking</option>
+          <option value="Anxious" <%= (typeof query !== 'undefined' && query.mood === 'Anxious') ? 'selected' : '' %>>🌧️ Anxious</option>
+          <option value="Grateful" <%= (typeof query !== 'undefined' && query.mood === 'Grateful') ? 'selected' : '' %>>✨ Grateful</option>
+          <option value="Sad" <%= (typeof query !== 'undefined' && query.mood === 'Sad') ? 'selected' : '' %>>💧 Sad</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Support Requirement Type -->
+    <div class="form-group">
+      <label for="post-support" class="form-label">What kind of care or response do you need right now?</label>
+      <select id="post-support" name="supportType" class="form-select">
+        <option value="Virtual Hugs Only">💜 Virtual Hugs Only (No advice, just warmth & validation)</option>
+        <option value="Gentle Advice Welcome">💛 Gentle Advice Welcome (Open to kind perspectives)</option>
+        <option value="Just Need to Vent">💚 Just Need to Vent (Listening ear only)</option>
+        <option value="Looking for Similar Experiences">💙 Looking for Similar Experiences (Anyone else feel this?)</option>
+      </select>
+    </div>
+
+    <!-- Content Warning (CW) -->
+    <div class="form-group">
+      <label for="post-cw" class="form-label">
+        Content Warning (Optional)
+        <span style="font-weight: normal; color: var(--text-light); font-size: 0.8rem;">— Add if mentioning triggers like panic attacks, grief, or sensitive events</span>
+      </label>
+      <input 
+        type="text" 
+        id="post-cw" 
+        name="contentWarning" 
+        class="form-input" 
+        placeholder="e.g. Mentions severe anxiety & panic symptoms"
+      >
+    </div>
+
+    <!-- Tags -->
+    <div class="form-group">
+      <label for="post-tags" class="form-label">Tags (Optional, comma-separated)</label>
+      <input 
+        type="text" 
+        id="post-tags" 
+        name="tags" 
+        class="form-input" 
+        placeholder="e.g. burnout, exams, healing, self-care"
+      >
+    </div>
+
+    <!-- Form Actions -->
+    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 1rem; margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+      <a href="/" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-primary" style="padding: 0.7rem 1.8rem;">
+        <span>💖 Share Safely</span>
+      </button>
+    </div>
+  </form>
+</div>

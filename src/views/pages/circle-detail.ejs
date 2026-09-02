@@ -1,0 +1,82 @@
+<div style="max-width: 820px; margin: 0 auto;">
+  <!-- Back navigation -->
+  <div style="margin-bottom: 1rem;">
+    <a href="/circles" style="font-size: 0.88rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.35rem;">
+      <span>←</span> All Support Circles
+    </a>
+  </div>
+
+  <!-- Circle Hero Banner -->
+  <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 1.5rem;">
+    <div style="height: 110px; background: <%= circle.bannerGradient %>; position: relative; padding: 1.5rem;">
+      <div style="position: absolute; bottom: -25px; left: 1.5rem; width: 64px; height: 64px; background: var(--bg-surface); border-radius: 50%; border: 3px solid var(--bg-surface); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: var(--shadow-md);">
+        <%= circle.icon %>
+      </div>
+    </div>
+
+    <div style="padding: 2.5rem 1.5rem 1.5rem;">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+        <div>
+          <h1 style="font-size: 1.5rem; font-weight: 800;"><%= circle.name %></h1>
+          <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 0.25rem;"><%= circle.description %></p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <form action="/circles/<%= circle.id %>/join" method="POST" style="margin: 0;">
+            <input type="hidden" name="returnTo" value="/circles/<%= circle.id %>">
+            <button 
+              type="submit" 
+              class="btn <%= isMember ? 'btn-secondary' : 'btn-primary' %>"
+              style="font-size: 0.88rem;"
+            >
+              <%= isMember ? '✓ Joined Circle' : '+ Join Circle' %>
+            </button>
+          </form>
+
+          <a href="/posts/new?circle=<%= circle.id %>" class="btn btn-pill-subtle">
+            <span>✍️ Post to Circle</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Circle Stats -->
+      <div style="display: flex; gap: 1.5rem; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-light); border-top: 1px solid var(--border-color); padding-top: 1rem;">
+        <span>👥 <strong><%= circle.memberCount %></strong> Members</span>
+        <span>📝 <strong><%= posts.length %></strong> Stories Shared</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Circle Safe Rules Card -->
+  <% if (circle.rules && circle.rules.length > 0) { %>
+    <div class="card" style="background-color: var(--bg-surface-subtle); margin-bottom: 1.5rem; border-left: 4px solid var(--secondary);">
+      <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--secondary);">
+        🛡️ Room Agreements for <%= circle.name %>
+      </div>
+      <ul style="padding-left: 1.25rem; font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.35rem;">
+        <% circle.rules.forEach(rule => { %>
+          <li><%= rule %></li>
+        <% }); %>
+      </ul>
+    </div>
+  <% } %>
+
+  <!-- Posts in Circle -->
+  <div style="margin-top: 1.5rem;">
+    <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem;">Stories in this Circle</h2>
+
+    <% if (posts && posts.length > 0) { %>
+      <% posts.forEach(post => { %>
+        <%- include('../partials/post-card', { post }) %>
+      <% }); %>
+    <% } else { %>
+      <div class="card" style="text-align: center; padding: 2.5rem 1.5rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌸</div>
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1rem;">
+          No stories have been posted in this circle yet. Be the first to break the silence!
+        </p>
+        <a href="/posts/new?circle=<%= circle.id %>" class="btn btn-primary">Share First Story</a>
+      </div>
+    <% } %>
+  </div>
+</div>

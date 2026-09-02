@@ -1,0 +1,28 @@
+{
+  "name": "heart2heart",
+  "version": "1.0.0",
+  "description": "Heart2Heart - A safe space social media platform for sharing feelings and empathetic support",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node test-routes.js"
+  },
+  "keywords": [
+    "safe-space",
+    "mental-health",
+    "express",
+    "ejs",
+    "social-media"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-ejs-layouts": "^2.5.1",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0",
+    "uuid": "^11.1.0"
+  }
+}

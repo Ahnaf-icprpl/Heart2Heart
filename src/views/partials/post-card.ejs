@@ -1,0 +1,173 @@
+<div class="post-card" id="post-card-<%= post.id %>">
+  <!-- Header -->
+  <div class="post-header">
+    <div class="post-author-meta">
+      <% if (post.isAnonymous) { %>
+        <div class="post-avatar" style="background-color: <%= post.authorAvatarBg %>;">
+          <%= post.authorAvatar %>
+        </div>
+        <div class="post-author-info">
+          <div class="author-name">
+            <span><%= post.authorName %></span>
+            <span style="font-size: 0.72rem; padding: 0.15rem 0.4rem; background: var(--bg-surface-subtle); border-radius: var(--radius-full); color: var(--text-light); font-weight: 500;">Anonymous</span>
+          </div>
+          <div class="author-meta-sub">
+            <span><%= timeAgo(post.createdAt) %></span>
+            <span>•</span>
+            <a href="/circles/<%= post.circleId %>" class="circle-badge-link"><%= post.circleName %></a>
+          </div>
+        </div>
+      <% } else { %>
+        <a href="/profile/<%= post.authorId %>" style="display: flex; gap: 0.75rem; align-items: center;">
+          <div class="post-avatar" style="background-color: <%= post.authorAvatarBg %>;">
+            <%= post.authorAvatar %>
+          </div>
+          <div class="post-author-info">
+            <div class="author-name">
+              <span><%= post.authorName %></span>
+            </div>
+            <div class="author-meta-sub">
+              <span>@<%= post.authorHandle %></span>
+              <span>•</span>
+              <span><%= timeAgo(post.createdAt) %></span>
+              <span>•</span>
+              <a href="/circles/<%= post.circleId %>" class="circle-badge-link"><%= post.circleName %></a>
+            </div>
+          </div>
+        </a>
+      <% } %>
+    </div>
+
+    <!-- Mood & Support Badges -->
+    <div class="post-badges-right">
+      <div class="mood-pill">
+        <span><%= post.moodEmoji %></span>
+        <span><%= post.mood %></span>
+      </div>
+
+      <div class="support-badge badge-<%= post.supportBadgeColor %>">
+        <span><%= post.supportType %></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Warning (if present) -->
+  <% if (post.contentWarning && post.contentWarning.trim() !== '') { %>
+    <div class="cw-box">
+      <div class="cw-header">
+        <div style="display: flex; align-items: center; gap: 0.4rem;">
+          <span>⚠️</span>
+          <span><strong>Content Warning:</strong> <%= post.contentWarning %></span>
+        </div>
+        <span class="cw-trigger-text" style="font-size: 0.78rem; text-decoration: underline;">Show content</span>
+      </div>
+      <div class="cw-content">
+        <h3 class="post-title">
+          <a href="/posts/<%= post.id %>"><%= post.title %></a>
+        </h3>
+        <div class="post-body"><%= post.content %></div>
+      </div>
+    </div>
+  <% } else { %>
+    <h3 class="post-title">
+      <a href="/posts/<%= post.id %>"><%= post.title %></a>
+    </h3>
+    <div class="post-body"><%= post.content %></div>
+  <% } %>
+
+  <!-- Tags -->
+  <% if (post.tags && post.tags.length > 0) { %>
+    <div class="post-tags">
+      <% post.tags.forEach(tag => { %>
+        <a href="/?tag=<%= encodeURIComponent(tag) %>" class="tag-pill">#<%= tag %></a>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <!-- Empathetic Reactions & Actions -->
+  <% 
+    const currentUserReactions = (post.userReactions && post.userReactions[currentUser.id]) || [];
+    const isBookmarked = currentUser.bookmarkedPostIds && currentUser.bookmarkedPostIds.includes(post.id);
+  %>
+  <div class="post-footer">
+    <div class="reactions-group">
+      <!-- Hug Reaction -->
+      <button 
+        type="button" 
+        class="reaction-btn <%= currentUserReactions.includes('hug') ? 'active' : '' %>"
+        data-post-id="<%= post.id %>"
+        data-reaction="hug"
+        title="Send a warm virtual hug"
+      >
+        <span>❤️</span>
+        <span>Hug</span>
+        <span class="reaction-count"><%= post.reactions.hug || 0 %></span>
+      </button>
+
+      <!-- I Hear You Reaction -->
+      <button 
+        type="button" 
+        class="reaction-btn <%= currentUserReactions.includes('hearYou') ? 'active' : '' %>"
+        data-post-id="<%= post.id %>"
+        data-reaction="hearYou"
+        title="I hear you & your feelings are valid"
+      >
+        <span>🤗</span>
+        <span>Hear You</span>
+        <span class="reaction-count"><%= post.reactions.hearYou || 0 %></span>
+      </button>
+
+      <!-- Sending Hope Reaction -->
+      <button 
+        type="button" 
+        class="reaction-btn <%= currentUserReactions.includes('hope') ? 'active' : '' %>"
+        data-post-id="<%= post.id %>"
+        data-reaction="hope"
+        title="Sending you light & hope"
+      >
+        <span>🕊️</span>
+        <span>Hope</span>
+        <span class="reaction-count"><%= post.reactions.hope || 0 %></span>
+      </button>
+
+      <!-- Relate Reaction -->
+      <button 
+        type="button" 
+        class="reaction-btn <%= currentUserReactions.includes('relate') ? 'active' : '' %>"
+        data-post-id="<%= post.id %>"
+        data-reaction="relate"
+        title="I feel this exact same way"
+      >
+        <span>💭</span>
+        <span>Relate</span>
+        <span class="reaction-count"><%= post.reactions.relate || 0 %></span>
+      </button>
+    </div>
+
+    <!-- Actions (Comments, Bookmark) -->
+    <div class="action-buttons">
+      <a href="/posts/<%= post.id %>" class="post-action-btn" title="View supportive comments">
+        <span>💬</span>
+        <span><%= (post.comments && post.comments.length) || 0 %></span>
+      </a>
+
+      <button 
+        type="button" 
+        class="post-action-btn bookmark-toggle-btn <%= isBookmarked ? 'bookmarked' : '' %>"
+        data-post-id="<%= post.id %>"
+        title="Save this comforting story"
+      >
+        <span class="bookmark-icon"><%= isBookmarked ? '🔖' : '🏷️' %></span>
+        <span class="bookmark-label"><%= isBookmarked ? 'Saved' : 'Save' %></span>
+      </button>
+
+      <% if (post.authorId === currentUser.id || currentUser.id === 'user_maya') { %>
+        <form action="/posts/<%= post.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to remove this post from your safe space?');" style="margin:0;">
+          <button type="submit" class="post-action-btn" style="color: var(--text-light);" title="Delete post">
+            <span>🗑️</span>
+          </button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'Heart2Heart | A Safe Space For Feelings' %></title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Core App Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+  <%- typeof style !== 'undefined' ? style : '' %>
+</head>
+<body>
+  <!-- Global Top Navbar -->
+  <%- include('../partials/navbar') %>
+
+  <!-- Main Grid App Layout -->
+  <div class="app-wrapper">
+    <!-- Left Navigation Sidebar -->
+    <%- include('../partials/sidebar-left') %>
+
+    <!-- Center Feed & Main Page View -->
+    <main class="main-content">
+      <!-- Flash Alert Banners -->
+      <%- include('../partials/flash') %>
+
+      <!-- Dynamic Page Body -->
+      <%- body %>
+    </main>
+
+    <!-- Right Care & Community Sidebar -->
+    <%- include('../partials/sidebar-right') %>
+  </div>
+
+  <!-- Global Mood Tracker Modal -->
+  <%- include('../partials/mood-modal') %>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <div class="mobile-bottom-nav">
+    <a href="/" class="mobile-nav-item <%= activePath === '/' ? 'active' : '' %>">
+      <span>🏡</span>
+      <span>Feed</span>
+    </a>
+    <a href="/moods" class="mobile-nav-item <%= activePath === '/moods' ? 'active' : '' %>">
+      <span>🌈</span>
+      <span>Feelings</span>
+    </a>
+    <a href="/posts/new" class="mobile-nav-item <%= activePath === '/posts/new' ? 'active' : '' %>" style="color: var(--primary); font-weight: 700;">
+      <span>✍️</span>
+      <span>Share</span>
+    </a>
+    <a href="/circles" class="mobile-nav-item <%= activePath.startsWith('/circles') ? 'active' : '' %>">
+      <span>🫧</span>
+      <span>Circles</span>
+    </a>
+    <a href="/profile" class="mobile-nav-item <%= activePath === '/profile' ? 'active' : '' %>">
+      <span>🤍</span>
+      <span>Space</span>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- App Client Scripts -->
+  <script src="/js/main.js"></script>
+  <%- typeof script !== 'undefined' ? script : '' %>
+</body>
+</html>
