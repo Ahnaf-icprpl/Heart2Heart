@@ -12,7 +12,7 @@
 
   <!-- Search Form Bar -->
   <form action="/search" method="GET" style="margin-bottom: 1.75rem;">
-    <div style="display: flex; gap: 0.5rem;">
+    <div class="search-form-row">
       <input 
         type="search" 
         name="q" 
@@ -32,7 +32,7 @@
       <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--secondary);">
         🫧 Matching Support Circles
       </h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem;">
+      <div class="search-circles-grid">
         <% matchingCircles.forEach(circle => { %>
           <a href="/circles/<%= circle.id %>" class="card" style="padding: 1rem; display: flex; align-items: center; gap: 0.75rem; transition: var(--transition);">
             <span style="font-size: 1.8rem;"><%= circle.icon %></span>

@@ -7,21 +7,21 @@
   </div>
 
   <!-- Circle Hero Banner -->
-  <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 1.5rem;">
-    <div style="height: 110px; background: <%= circle.bannerGradient %>; position: relative; padding: 1.5rem;">
-      <div style="position: absolute; bottom: -25px; left: 1.5rem; width: 64px; height: 64px; background: var(--bg-surface); border-radius: 50%; border: 3px solid var(--bg-surface); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: var(--shadow-md);">
+  <div class="card circle-hero-card" style="padding: 0; overflow: hidden; margin-bottom: 1.5rem;">
+    <div class="circle-banner-hero" style="background: <%= circle.bannerGradient %>;">
+      <div class="circle-hero-avatar">
         <%= circle.icon %>
       </div>
     </div>
 
-    <div style="padding: 2.5rem 1.5rem 1.5rem;">
+    <div class="circle-hero-content">
       <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
         <div>
           <h1 style="font-size: 1.5rem; font-weight: 800;"><%= circle.name %></h1>
           <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 0.25rem;"><%= circle.description %></p>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="circle-hero-actions">
           <form action="/circles/<%= circle.id %>/join" method="POST" style="margin: 0;">
             <input type="hidden" name="returnTo" value="/circles/<%= circle.id %>">
             <button 
@@ -40,7 +40,7 @@
       </div>
 
       <!-- Circle Stats -->
-      <div style="display: flex; gap: 1.5rem; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-light); border-top: 1px solid var(--border-color); padding-top: 1rem;">
+      <div class="circle-stats-row">
         <span>👥 <strong><%= circle.memberCount %></strong> Members</span>
         <span>📝 <strong><%= posts.length %></strong> Stories Shared</span>
       </div>

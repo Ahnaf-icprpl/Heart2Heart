@@ -1,3 +1,15 @@
+<!-- Mobile & Tablet Daily Affirmation (Active when right sidebar is hidden) -->
+<% if (dailyAffirmation) { %>
+  <div class="card affirmation-card mobile-affirmation-banner">
+    <div class="card-title" style="color: var(--primary); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem;">
+      <span>✨</span>
+      <span>Comfort for Your Soul</span>
+    </div>
+    <p class="affirmation-quote" style="font-size: 0.9rem; margin-bottom: 0.35rem;">"<%= dailyAffirmation.quote %>"</p>
+    <div class="affirmation-author" style="font-size: 0.78rem;">— <%= dailyAffirmation.author %></div>
+  </div>
+<% } %>
+
 <!-- Quick Post Launcher Banner -->
 <div class="composer-card">
   <div class="composer-header">

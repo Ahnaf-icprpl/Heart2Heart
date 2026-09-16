@@ -13,8 +13,8 @@
   <!-- Mood Groups Stream -->
   <div style="display: flex; flex-direction: column; gap: 1.75rem;">
     <% moodGroups.forEach(group => { %>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+      <div class="card mood-group-card">
+        <div class="mood-group-header">
           <div style="display: flex; align-items: center; gap: 0.6rem;">
             <span style="font-size: 1.8rem;"><%= group.emoji %></span>
             <div>
@@ -23,7 +23,7 @@
             </div>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <div class="mood-group-actions">
             <a href="/posts/new?mood=<%= encodeURIComponent(group.name) %>" class="btn btn-pill-subtle" style="font-size: 0.78rem;">
               <span>+ Share in <%= group.name %></span>
             </a>
